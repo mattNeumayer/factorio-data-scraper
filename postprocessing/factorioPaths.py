@@ -85,7 +85,6 @@ def getPaths(args):
         gamedir = Path(args.game).resolve()
         if not isPotentialGameDir(gamedir):
             sys.exit(f"ERROR  Invalid game path: {gamedir}")
-
     
     if args.mods:
         moddir = Path(args.mods).resolve()

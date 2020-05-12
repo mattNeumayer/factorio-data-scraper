@@ -15,10 +15,14 @@ def parseArgs():
 
     args = parser.parse_args()
     dirs = factorioPaths.getPaths(args)
+
     dirs['output'] = Path(args.outputDir) if args.outputDir else Path.cwd()
-    if not Path(args.out).is_dir():
+    dirs['icons'] = dirs['output'] / 'icons'
+
+    if not Path(dirs['output']).is_dir():
         sys.exit(f"ERROR  The given output path is not a directory!")
-    (dirs['output'] / 'icons').mkdir(exist_ok=True)
+
+    dirs['icons'].mkdir(exist_ok=True)
     return dirs
 
 

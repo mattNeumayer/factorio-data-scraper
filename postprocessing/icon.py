@@ -25,7 +25,7 @@ def process(iconSpec, dirs, outputFileName, warn=True):
         return (None, None)
     
     iconSpec['icon'] = outputFileName
-    image.save(dirs['output'] / outputFileName)
+    image.save(dirs['icons'] / outputFileName)
     return (outputFileName, oldIconSpec)
 
 
@@ -40,28 +40,45 @@ def processMultipleIcons(iconSpec, dirs):
         else:
             layerSize = iconSize
         
-        # tint, shift, scale
         with openImage(icon['icon'], dirs) as image:
             image = image.crop((0, 0, layerSize, layerSize))
-            if 'tint' in icon:
-                tint = icon['tint']
 
-                tintArr = [0.0, 0.0, 0.0, 1.0]
+            if 'tint' in icon:
+                # The color specs are so forgiving to user...
+                tint = icon['tint']
+                tintArr = [0.0, 0.0, 0.0, 0.0]
+
                 if isinstance(tint, list):
+                    maxVal = 255 if max(icon['tint']) > 1.0 else 1.0
                     tintArr = tint
-                    if len(tintArr) == 3:
-                        tintArr[3] = 1.0
+                    if len(tint) == 3:
+                        tintArr.append(maxVal)
                 else:
+                    maxVal = 255 if max([tint[k] for k in ['r', 'g', 'b', 'a'] if k in tint]) > 1.0 else 1.0
+                    tintArr[3] = maxVal
                     for i, k in enumerate(['r', 'g', 'b', 'a']):
                         if k in tint:
                             tintArr[i] = tint[k]
                 
                 bands = image.split()
-                r = bands[0].point(lambda i: i * tintArr[0])
-                g = bands[1].point(lambda i: i * tintArr[1])
-                b = bands[2].point(lambda i: i * tintArr[2])
-                a = bands[3].point(lambda i: i * tintArr[3])
+                r = bands[0].point(lambda i: i * tintArr[0] / maxVal)
+                g = bands[1].point(lambda i: i * tintArr[1] / maxVal)
+                b = bands[2].point(lambda i: i * tintArr[2] / maxVal)
+                a = bands[3].point(lambda i: i * tintArr[3] / maxVal)
                 image = Image.merge('RGBA', [r,g,b,a])
+
+            if 'shift' in icon:
+                shift = icon['shift']
+                image = image.transform(image.size, Image.AFFINE, (1, 0, shift[0], 0, 1, shift[1]))
+                image = image.crop((0, 0, layerSize, layerSize))
+            
+            if 'scale' in icon:
+                newWidth  = int(image.size[0]*icon['scale'])
+                newHeight = int(image.size[1]*icon['scale'])
+                image = image.resize((newWidth, newHeight))
+                # Well, lets be honst the user of this post-processor has to decide about the scale...
+                pass
+            
             if not background:
                 background = image
             else:
