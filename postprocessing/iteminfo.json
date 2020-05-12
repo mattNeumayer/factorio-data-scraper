@@ -1,0 +1,100 @@
+{
+    "base": {
+        "parent": null,
+        "whitelist": ["name", "type", "localised_description", "localised_name", "order"]
+    }, 
+    "item": {
+        "parent": "base",
+        "whitelist": [
+            "default_request_amount", "flags", "group", "subgroup", "wire_count", "burnt_result",
+            "place_as_tile", "place_result", "placed_as_equipment_result", 
+            "rocket_launch_product", "rocket_launch_products", 
+            "stackable", "stack_size", "icon", "orig_icon", "fuel"
+        ]
+    },
+    "ammo": {
+        "parent": "item",
+        "whitelist": ["magazine_size", "reload_time"]
+    },
+    "capsule": {
+        "parent": "item",
+        "whitelist": []
+    },
+    "gun": {
+        "parent": "item",
+        "whitelist": []
+    },
+    "item-with-entity-data": {
+        "parent": "item",
+        "whitelist": []
+    },
+    "item-with-label": {
+        "parent": "item",
+        "whitelist": ["default_label_color", "draw_label_for_cursor_render"]
+    },
+    "item-with-inventory": {
+        "parent": "item-with-label",
+        "whitelist": [
+            "inventory_size", "filter_mode", "insertion_priority_mode", "item_filters", "item_group_filters", 
+            "item_subgroup_filters", "localised_filter_message", "extend_inventory_by_default"
+        ]
+    },
+    "blueprint-book": {
+        "parent": "item-with-inventory",
+        "whitelist": ["show_in_library"]
+    },
+    "item-with-tags": {
+        "parent": "item-with-label",
+        "whitelist": []
+    },
+    "selection-tool": {
+        "parent": "item-with-label",
+        "whitelist": [
+            "always_include_tiles", "show_in_library", 
+            "selection_cursor_box_type", "entity_filters", "entity_type_filters", "tile_filters", 
+            "entity_filter_mode", "tile_filter_mode", "selection_border_color", "selection_mode_flags",
+            "alt_selection_cursor_box_type", "alt_entity_filters", "alt_entity_type_filters", "alt_tile_filters", 
+            "alt_entity_filter_mode", "alt_tile_filter_mode", "alt_selection_border_color", "alt_selection_mode_flags"
+        ]
+    },
+    "blueprint": {
+        "parent": "selection-tool",
+        "whitelist": []
+    },
+    "copy-paste-tool": {
+        "parent": "selection-tool",
+        "whitelist": []
+    },
+    "deconstruction-item":  {
+        "parent": "selection-tool",
+        "whitelist": ["entity_filter_slots", "tile_filter_slots"]
+    },
+    "upgrade-item":  {
+        "parent": "selection-tool",
+        "whitelist": ["mapper_count"]
+    },
+    "module": {
+        "parent": "item",
+        "whitelist": ["category", "tier", "limitation_message_key", "limitations", "module_effects"]
+    },
+    "rail-planner": {
+        "parent": "item",
+        "whitelist": []
+    },
+    "tool": {
+        "parent": "item",
+        "whitelist": ["durability", "durability_description_key", "infinite"]
+    },
+    "armor": {
+        "parent": "tool",
+        "whitelist": ["equipment_grid", "inventory_size_bonus", "resistances"]
+    },
+    "mining-tool": {
+        "parent": "tool",
+        "whitelist": []
+    },
+    "repair-tool": {
+        "parent": "tool",
+        "whitelist": ["speed", "repair_result"]
+    }
+}

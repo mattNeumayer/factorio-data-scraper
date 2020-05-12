@@ -1,0 +1,9 @@
+{
+"name":"zzythumdatascraper",
+"version": "0.1.0",
+"title":"DataScraper",
+"author":"DagonFry",
+"description":"",
+"factorio_version":"0.18",
+"dependencies":["base >= 0.17.35"]
+}
