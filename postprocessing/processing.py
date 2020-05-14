@@ -18,6 +18,8 @@ def process(data, dirs):
 
     processGroups(data, loc, dirs)
 
+    icon.reportOverFlow()
+
     del data['raw']
     outFile = dirs['output'] / 'output.json'
     print(f"\nDone. Writing to:  {outFile}")
